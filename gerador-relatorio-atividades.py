@@ -62,9 +62,3 @@ for x in arquivosModificados:
         extencaoAnterior = extencao ;
         print('##Arquivos com extencao ' + extencaoAnterior)
     print(x)
-
-#[print(x) for x in arquivosNovos]
-
-#print('Arquivos Modificados')
-
-#[print(x) for x in arquivosModificados]
