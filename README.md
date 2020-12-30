@@ -9,7 +9,7 @@ Os arquivos são retornados organizados através da extenção do arquivo.
 python3 /home/stefanini/bin/gerador-relatorio.py  bc895ad6a411683f5737d4a4b89e52f54cd2d68c 0983ca286f54935ae88bee331e9d82f05fe79386
 ```
 Retorno: 
-
+```
 _______________Arquivos Novos_______________
 ##Arquivos com extencao .html
 A	src/app/spas/fluxo-deploy/implantacao-jobs-datastage/modais/modal-detalhamento-validacao.html
@@ -27,3 +27,4 @@ M	src/app/spas/fluxo-deploy/implantacao-jobs-datastage/solicitacao/solicitacao-d
 M	spec/src/app/spas/fluxo-deploy/implantacao-jobs-datastage/solicitacao/solicitacao-deploy-controller-spec.js
 M	src/app/spas/fluxo-deploy/fluxo-deploy-app.js
 M	src/app/spas/fluxo-deploy/implantacao-jobs-datastage/solicitacao/solicitacao-deploy-controller.js
+```
