@@ -10,21 +10,18 @@ arquivosNovos = []
 arquivosModificados = []
 
 for i in inputArgs[0:]:
-    result = subprocess.run(['git show '+i+' --name-status --pretty=oneline --abbrev-commit --diff-filter=A '], capture_output=True, text=True,shell=True).stdout.splitlines() 
+    result = subprocess.run(['git show '+i+' --name-status --pretty=oneline --abbrev-commit --diff-filter=A | awk \'{print $2}\' |  awk \'{if(NR>1)print}\''], capture_output=True, text=True,shell=True).stdout.splitlines() 
     if len(result) >0:
-        del result[0]    
         arquivosNovos = arquivosNovos + result
     
-      
-    
-
 for i in inputArgs[0:]:
-    result = subprocess.run(['git show '+i+' --name-status --pretty=oneline --abbrev-commit --diff-filter=M '], capture_output=True, text=True,shell=True).stdout.splitlines() 
+    result = subprocess.run(['git show '+i+' --name-status --pretty=oneline --abbrev-commit --diff-filter=M | awk \'{print $2}\' |  awk \'{if(NR>1)print}\'' ], capture_output=True, text=True,shell=True).stdout.splitlines() 
     if len(result) >0:
-        del result[0]    
         arquivosModificados = arquivosModificados + result 
 
-    
+arquivosNovos = list(set(arquivosNovos))
+arquivosModificados = list(set(arquivosModificados))
+
 for novo in arquivosNovos:
     try:
         arquivosModificados.remove(novo)
