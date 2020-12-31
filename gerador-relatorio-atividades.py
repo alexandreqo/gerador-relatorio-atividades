@@ -2,8 +2,6 @@ import subprocess
 import sys
 import os
 import re 
-from bdb import set_trace
-
 
 inputArgs = sys.argv
 arquivosNovos = []
