@@ -9,15 +9,6 @@ inputArgs = sys.argv
 arquivosNovos = []
 arquivosModificados = []
 
-
-def ordenadorPorExtencao(e):
-    set_trace()
-    m = re.search('(\b\.\b)(?!.*\1).*', e)
-    print('teste')
-    if m:
-        print(m.group(1))
-        return m.group(1)
-    return ''
 for i in inputArgs[0:]:
     result = subprocess.run(['git show '+i+' --name-status --pretty=oneline --abbrev-commit --diff-filter=A '], capture_output=True, text=True,shell=True).stdout.splitlines() 
     if len(result) >0:
