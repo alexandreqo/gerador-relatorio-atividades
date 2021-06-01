@@ -1,9 +1,12 @@
 # Gerador Relatorio de atividades
 
-Este projeto tem por objetivo auxiliar na geração de relatorio de atividades, ele retorna os arquivos criados e modificados através dos commits fornecidos como parametros.
+Este projeto tem objetiva auxiliar na geração de relatorio de atividades, este retorna um texto com arquivos criados e modificados que estão entre o primeiro e ultimo commit fornecidos nos argumentos.
 Se o arquivo foi criado e então modificado, o modificado será eliminado da listagem.
 Os arquivos são retornados organizados através da extenção do arquivo.
 
+```
+python3 /home/gerador-relatorio.py  <hash-primeiro-commit> <hash-ultimo-commit>
+```
 # Exemplo
 ```
 python3 /home/gerador-relatorio.py  bc895ad6a411683f5737d4a4b89e52f54cd2d68c 0983ca286f54935ae88bee331e9d82f05fe79386
