@@ -9,7 +9,7 @@ Dentro do repositorio:
 ```
 python3 /home/gerador-relatorio.py  <hash-primeiro-commit> <hash-ultimo-commit>
 ```
-# Exemplo
+Exemplo
 ```
 python3 /home/gerador-relatorio.py  bc895ad6a411683f5737d4a4b89e52f54cd2d68c 0983ca286f54935ae88bee331e9d82f05fe79386
 ```
