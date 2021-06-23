@@ -1,7 +1,6 @@
 import subprocess
 import sys
 import os
-import re 
 
 inputArgs = sys.argv
 arquivosNovos = []
@@ -17,14 +16,18 @@ for i in inputArgs[0:]:
 for i in inputArgs[0:]:
     result = subprocess.run(['git show '+i+' --name-status --pretty=oneline --abbrev-commit --diff-filter=M | awk \'{print $2}\' |  awk \'{if(NR>1)print}\'' ], capture_output=True, text=True,shell=True).stdout.splitlines()
     if len(result) >0:
-        arquivosModificados = arquivosModificados + list(map(lambda x: foldername + '/' + x + '#' + i[0:8], result))
+        for modificado in set(list(map(lambda x: foldername + '/' + x + '#' + i[0:8], result))):
+            if list(map(lambda x: x.split('#')[0], arquivosModificados)).count(modificado.split('#')[0]) == 0:
+                arquivosModificados.append(modificado)
 
 arquivosNovos = list(set(arquivosNovos))
 arquivosModificados = list(set(arquivosModificados))
 
 for novo in arquivosNovos:
     try:
-        arquivosModificados.remove(novo)
+        for modificado in arquivosModificados:
+            if novo.split('#')[0] == modificado.split('#')[0]:
+                arquivosModificados.remove(modificado)
     except ValueError:
         pass
 
