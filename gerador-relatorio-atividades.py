@@ -11,12 +11,12 @@ foldername = os.path.basename(dirpath)
 for i in inputArgs[0:]:
     result = subprocess.run(['git show '+i+' --name-status --pretty=oneline --abbrev-commit --diff-filter=A | awk \'{print $2}\' |  awk \'{if(NR>1)print}\''], capture_output=True, text=True,shell=True).stdout.splitlines()
     if len(result) >0:
-        arquivosNovos = arquivosNovos + list(map(lambda x: foldername + '/' + x + '#' + i[0:8], result))
+        arquivosNovos = arquivosNovos + list(map(lambda x: foldername + '/' + x + '#' + i[0:10], result))
 
 for i in inputArgs[0:]:
     result = subprocess.run(['git show '+i+' --name-status --pretty=oneline --abbrev-commit --diff-filter=M | awk \'{print $2}\' |  awk \'{if(NR>1)print}\'' ], capture_output=True, text=True,shell=True).stdout.splitlines()
     if len(result) >0:
-        for modificado in set(list(map(lambda x: foldername + '/' + x + '#' + i[0:8], result))):
+        for modificado in set(list(map(lambda x: foldername + '/' + x + '#' + i[0:10], result))):
             if list(map(lambda x: x.split('#')[0], arquivosModificados)).count(modificado.split('#')[0]) == 0:
                 arquivosModificados.append(modificado)
 
