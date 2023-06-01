@@ -1,19 +1,16 @@
 # Gerador Relatorio de atividades
 
-Este script auxilia na geração de relatorio de atividades de empresas terceirizadas no Banco do Brasil.
-O script recebe como parametros uma lista de hashs de commits e retorna um texto organizado por extensões com todos os arquivos criados, modificados e deletados, se um arquivo entre os hashes for criado e depois modificado, as modificações não serão contabilizadas.
+Este script tem como objetivo auxiliar na geração de relatórios de atividades de empresas terceirizadas no Banco do Brasil. O script recebe como parâmetros uma lista de hashes de commits e retorna um texto organizado por extensões, contendo todos os arquivos criados, modificados e deletados. Caso um arquivo seja criado e posteriormente modificado entre os hashes, as modificações não serão contabilizadas.
 
-Dentro do repositorio:
-
+Uso do script:
 ```
-python3 /home/gerador-relatorio.py  <hash-primeiro-commit> <hash-segundo-commit>
- <hash-terceiro-commit>
+python3 /home/gerador-relatorio.py <hash-primeiro-commit> <hash-segundo-commit> <hash-terceiro-commit>
  ```
  Exemplo:
 ```
-python3 /home/gerador-relatorio.py  bc895ad6a411683f5737d4a4b89e52f54cd2d68c 0983ca286f54935ae88bee331e9d82f05fe79386
+python3 /home/gerador-relatorio.py bc895ad6a411683f5737d4a4b89e52f54cd2d68c 0983ca286f54935ae88bee331e9d82f05fe79386
 ```
-Retorno: 
+Retorno:
 ```
 _______________Arquivos Novos_______________
 ##Arquivos com extensao .html
