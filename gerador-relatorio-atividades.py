@@ -2,54 +2,66 @@ import subprocess
 import sys
 import os
 
-inputArgs = sys.argv
+inputArgs = sys.argv[1:]
 arquivosNovos = []
 arquivosModificados = []
 dirpath = os.getcwd()
 foldername = os.path.basename(dirpath)
 
-for i in inputArgs[0:]:
-    result = subprocess.run(['git show '+i+' --name-status --pretty=oneline --abbrev-commit --diff-filter=A | awk \'{print $2}\' |  awk \'{if(NR>1)print}\''], capture_output=True, text=True,shell=True).stdout.splitlines()
-    if len(result) >0:
-        arquivosNovos = arquivosNovos + list(map(lambda x: foldername + '/' + x + '#' + i[0:10], result))
+for i in inputArgs:
+    command_git_show = ['git', 'show', i, '--name-status', '--pretty=oneline', '--abbrev-commit', '--diff-filter=A']
+    command_awk = ['awk', '{print $2}']
+    command_awk_skip_first = ['awk', '{if(NR>1)print}']
 
-for i in inputArgs[0:]:
-    result = subprocess.run(['git show '+i+' --name-status --pretty=oneline --abbrev-commit --diff-filter=M | awk \'{print $2}\' |  awk \'{if(NR>1)print}\'' ], capture_output=True, text=True,shell=True).stdout.splitlines()
-    if len(result) >0:
-        for modificado in set(list(map(lambda x: foldername + '/' + x + '#' + i[0:10], result))):
-            if list(map(lambda x: x.split('#')[0], arquivosModificados)).count(modificado.split('#')[0]) == 0:
+    git_show_result = subprocess.run(command_git_show, capture_output=True, text=True).stdout
+    awk_result = subprocess.run(command_awk, input=git_show_result, capture_output=True, text=True).stdout
+    awk_skip_first_result = subprocess.run(command_awk_skip_first, input=awk_result, capture_output=True, text=True).stdout
+
+    result = awk_skip_first_result.splitlines()
+    print(result)
+    if len(result) > 0:
+        arquivosNovos += [foldername + '/' + x + '#' + i[:10] for x in result]
+
+for i in inputArgs:
+    command_git_show = ['git', 'show', i, '--name-status', '--pretty=oneline', '--abbrev-commit', '--diff-filter=M']
+    command_awk = ['awk', '{print $2}']
+    command_awk_skip_first = ['awk', '{if(NR>1)print}']
+
+    git_show_result = subprocess.run(command_git_show, capture_output=True, text=True).stdout
+    awk_result = subprocess.run(command_awk, input=git_show_result, capture_output=True, text=True).stdout
+    awk_skip_first_result = subprocess.run(command_awk_skip_first, input=awk_result, capture_output=True, text=True).stdout
+
+    result = awk_skip_first_result.splitlines()
+    if len(result) > 0:
+        for modificado in set([foldername + '/' + x + '#' + i[:10] for x in result]):
+            if modificado.split('#')[0] not in [x.split('#')[0] for x in arquivosModificados]:
                 arquivosModificados.append(modificado)
 
 arquivosNovos = list(set(arquivosNovos))
 arquivosModificados = list(set(arquivosModificados))
 
 for novo in arquivosNovos:
-    try:
-        for modificado in arquivosModificados:
-            if novo.split('#')[0] == modificado.split('#')[0]:
-                arquivosModificados.remove(modificado)
-    except ValueError:
-        pass
+    for modificado in arquivosModificados:
+        if novo.split('#')[0] == modificado.split('#')[0]:
+            arquivosModificados.remove(modificado)
 
 arquivosNovos.sort(key=lambda f: os.path.splitext(f)[1])
 arquivosModificados.sort(key=lambda f: os.path.splitext(f)[1])
 
-
 print('_______________Arquivos Novos_______________')
-extencaoAnterior = ''
+extensao_anterior = ''
 for x in arquivosNovos:
-    extencao = os.path.splitext(x)[1].split('#')[0]
-    if extencao != extencaoAnterior:
-        extencaoAnterior = extencao ;
-        print('##Arquivos com extencao ' + extencaoAnterior)
+    extensao = os.path.splitext(x)[1].split('#')[0]
+    if extensao != extensao_anterior:
+        extensao_anterior = extensao
+        print('##Arquivos com extensao ' + extensao_anterior)
     print(x)
 
-
 print('_______________Arquivos Modificados_______________')
-extencaoAnterior = ''
+extensao_anterior = ''
 for x in arquivosModificados:
-    extencao = os.path.splitext(x)[1].split('#')[0]
-    if extencao != extencaoAnterior:
-        extencaoAnterior = extencao ;
-        print('##Arquivos com extencao ' + extencaoAnterior)
+    extensao = os.path.splitext(x)[1].split('#')[0]
+    if extensao != extensao_anterior:
+        extensao_anterior = extensao
+        print('##Arquivos com extensao ' + extensao_anterior)
     print(x)
