@@ -33,7 +33,7 @@ diretorio/spec/src/app/spas/fluxo-deploy/implantacao-jobs-datastage/solicitacao/
 diretorio/src/app/spas/fluxo-deploy/fluxo-deploy-app.js#bc895ad6
 diretorio/src/app/spas/fluxo-deploy/implantacao-jobs-datastage/solicitacao/solicitacao-deploy-controller.js#bc895ad6
 ```
-**Importante:** Caso não deseje levantar manualmente todos os hashes dos commits, é possível utilizar o comando abaixo como exemplo:
+**Importante:** Caso não deseje levantar manualmente todos os hashes dos commits, é possível utilizar o comando abaixo como exemplo. No exemplo abaixo geramos o relatorio com os commits do usuario c1317624 considerando todos os commits após a data 2024-12-01 (yyy=mm-dd) :
 
 ```
 git log --author="c1317624" --after="2024-12-01" --format="%H" | tr '\n' ' ' | xargs python3 /usr/bin/gerador-relatorio-atividades.py
